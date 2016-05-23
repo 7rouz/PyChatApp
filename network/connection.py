@@ -20,4 +20,15 @@ class Client:
     def get_readable_socket(self, socket_list):
         return select.select(socket_list, [], [])
 
+    def receive (self, sock):
+        data = sock.recv(4096)
+        if not data:
+            print '\nDisconnected from chat server'
+            sys.exit()
+        else:
+            # print data
+            sys.stdout.write(data)
 
+    def send (self):
+        msg = sys.stdin.readline()
+        client.soc.send(msg)

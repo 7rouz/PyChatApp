@@ -36,17 +36,19 @@ if __name__ == "__main__":
         for sock in read_sockets:
             #incoming message from remote server
             if sock == s:
-                data = sock.recv(4096)
+                client.receive(sock)
+                """data = sock.recv(4096)
                 if not data :
                     print '\nDisconnected from chat server'
                     sys.exit()
                 else :
                     #print data
-                    sys.stdout.write(data)
-                    prompt()
+                    sys.stdout.write(data)"""
+                prompt()
 
             #user entered a message
             else :
-                msg = sys.stdin.readline()
-                s.send(msg)
+                client.send()
+                """msg = sys.stdin.readline()
+                s.send(msg)"""
                 prompt()
