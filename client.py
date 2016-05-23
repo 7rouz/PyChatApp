@@ -1,6 +1,6 @@
 # Chat Client Script
 
-import socket, select, string, sys
+import sys
 from network.connection import Client
 
 def prompt() :
