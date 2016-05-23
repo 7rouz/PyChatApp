@@ -1,6 +1,7 @@
 # Chat Client Script
 
 import socket, select, string, sys
+from network.connection import Client
 
 def prompt() :
     sys.stdout.write('<You> ')
@@ -16,24 +17,21 @@ if __name__ == "__main__":
     host = sys.argv[1]
     port = int(sys.argv[2])
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.settimeout(2)
+    client = Client(host, port)
 
-    # connect to remote host
-    try :
-        s.connect((host, port))
-    except :
-        print 'Unable to connect'
-        sys.exit()
+    # Connect client to the server
+    client.connect()
 
     print 'Connected to remote host. Start sending messages'
     prompt()
+
+    s = client.soc 
 
     while 1:
         socket_list = [sys.stdin, s]
 
         # Get the list sockets which are readable
-        read_sockets, write_sockets, error_sockets = select.select(socket_list , [], [])
+        read_sockets, write_sockets, error_sockets = client.get_readable_socket(socket_list)
 
         for sock in read_sockets:
             #incoming message from remote server
